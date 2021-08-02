@@ -33,9 +33,6 @@ class my_traj(pt.TrajectoryIterator):
         https://amber-md.github.io/pytraj/latest/_api/pytraj.trajectory_iterator.html"""
         super().__init__(self.filepath+self.filetraj,self.filepath+self.filetop)
 
-    ####### center and image
-        
-
     ################
 
     def get_OH_hydrogens_atomnames(self):
