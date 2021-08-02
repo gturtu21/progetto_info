@@ -2,12 +2,23 @@ import pytraj as pt
 
 
 def triazol_dihedral(traj, time_averaged=True, save_to_file=True, plot=True):
-    """ return a python array of the dihedral angle value
-    as a function of simulation timesteps """
+    """ 
+    - return a python array of the dihedral angle value
+    as a function of simulation timesteps;
+
+    - the angle must be defined as a string with the Amber syntax:
+    ':1@O3 :1@C13 :1@C10 :1@C9' ;
+
+    - if more than one angle is present, a list of strings
+    should be given as an input.
+
+    """
     import numpy as np
 
     if traj.ndendr > 1:
-        mymask=[':'+str(resid)+'@O3'+' :'+str(resid)+'@C13'+' :' +str(resid)+'@C10'+' :' +str(resid)+'@C9' for resid in range(1,traj.ndendr+1)]
+        #dihedral_atoms = ['@O3 ','@C13 ','@C10 ','@C9']
+        #mymask=[''.join([':' + str(resid) + atom_name for atom_name in dihedral_atoms]) for resid in range(1,traj.ndendr+1)]
+        mymask = traj.get_angle_mask(['O3','C13','C10','C9'])
         dihedrals= pt.dihedral(traj, mask=mymask)
         media_t=np.zeros((traj.n_frames-1, traj.ndendr))
         for j in range(traj.ndendr):
@@ -15,11 +26,11 @@ def triazol_dihedral(traj, time_averaged=True, save_to_file=True, plot=True):
                 if dihedrals[j,i] < 0:
                     dihedrals[j,i]*= -1 
                 if i==0:
-                    media_t[i,j]=dihedrals[j,0]
+                    media_t[i,j] = dihedrals[j,0]
                 if i==traj.n_frames:
                     pass
                 else:
-                    media_t[i-1,j]=(sum(dihedrals[j,0:i+1]))/(i+1) 
+                    media_t[i-1,j] = sum(dihedrals[j,0:i+1])/(i+1) 
     else:
         dihedrals= pt.dihedral(traj, ':1@O3 :1@C13 :1@C10 :1@C9') 
         media_t=np.zeros((traj.n_frames-1, 1))
@@ -31,7 +42,7 @@ def triazol_dihedral(traj, time_averaged=True, save_to_file=True, plot=True):
             if i==traj.n_frames:
                 pass
             else:
-                media_t[i-1,0]=(sum(dihedrals[0:i+1]))/(i+1) 
+                media_t[i-1,0] = sum(dihedrals[0:i+1])/(i+1) 
     
     return dihedrals, media_t
 

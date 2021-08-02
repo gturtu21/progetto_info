@@ -14,8 +14,6 @@ except ValueError:
     print('The path variable was already correct!!')
     pass
 
-comm=MPI.COMM_WORLD
-
 ################################# IMPORT THE TRAJECTORY ##################################
 
 class my_traj(pt.TrajectoryIterator):
@@ -44,6 +42,17 @@ class my_traj(pt.TrajectoryIterator):
         """ return a list of the atom names of fluorine atoms
         present in the dendrons, this method is called to compute distances """
         return [{'name':atom.name,'resid':atom.resid+1} for atom in self.top.atoms if atom.type=='f' if atom.resid==resnumber]
+
+    def get_angle_mask(self, atom_names):
+        """ atom_names is a list or tuple of atom names such as:
+            ['C13','C5','N1',C4']
+        """
+        if len(atom_names) < 3 or len(atom_names) > 4:
+            print('A list of 3 or 4 atom names should be given as an input')
+            return
+        angle_mask = [' '.join([':' + str(resid) + '@' + atom_name for atom_name in atom_names]) for resid in range(1, self.ndendr+1)]
+        return angle_mask
+
 
     def __str__(self):
         if self.cosolvent == None:

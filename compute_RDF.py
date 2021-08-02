@@ -38,25 +38,22 @@ def all_rdf(mytraj):
     if mytraj.cosolvent=='ETN':
         rdf_couples=[(':JAN@%o',':ETN@%ho','jan_ox_etn_ho'),(':JAN@%f',':ETN@%hc','jan_f_etn_ch3'),(':JAN@%f',':ETN@%ho','jan_f_etn_ho'),(':JAN@%nc',':ETN@%hc','jan_triazole_etn_ch3'),(':JAN@%c3',':ETN@%hc','jan_csp3_etn_ch3'),(':JAN@%cc',':ETN@%hc','jan_csp2triaz_etn_ch3'),(':JAN@%c',':ETN@%hc','jan_ccarbonyl_etn_ch3'),(':ETN@%hc',':ETN@%hc','etn_ch3_etn_ch3'),(':JAN@%hc',':ETN@%hc','jan_hc_etn_ch3'),(':JAN@%oh',':ETN@%oh','jan_oh_etn_oh')]
         for couples in rdf_couples:
-            couple_name=str(couples[2])
-            data[couple_name]=rdf(couples[0],couples[1])
-            print('Done with couple:'+couple_name)
+            couple_name = couples[2]
+            data[couple_name] = rdf(couples[0],couples[1])
         return data
     ################# COMPUTE RDF BETWEEN DENDRONS AND TRIFLUOROETHANOL #################################
     if mytraj.cosolvent=='TFN': 
         rdf_couples=[(':JAN@%o',':TFN@%ho','jan_ox_tfn_ho'),(':JAN@%f',':TFN@%f','jan_f_tfn_cf3'),(':JAN@%f',':TFN@%ho','jan_f_tfn_ho'),(':JAN@%nc',':TFN@%f','jan_triazole_tfn_cf3'),(':JAN@%c3',':TFN@%f','jan_csp3_tfn_cf3'),(':JAN@%cc',':TFN@%f','jan_csp2triaz_tfn_cf3'),(':JAN@%c',':TFN@%f','jan_ccarbonyl_tfn_cf3'),(':TFN@%f',':TFN@%f','tfn_cf3_tfn_cf3'),(':JAN@%hc',':TFN@%f','jan_hc_tfn_cf3'),(':JAN@%oh',':TFN@%oh','jan_oh_tfn_oh')]
         for couples in rdf_couples:
-            couple_name=str(couples[2])
-            data[couple_name]=rdf(couples[0],couples[1])
-            print('Done with couple:'+couple_name)
+            couple_name = couples[2]
+            data[couple_name] = rdf(couples[0],couples[1])
         return data
     ################# COMPUTE RDF BETWEEN DENDRONS AND WATER #################################
     else:
-        rdf_couples=[(':JAN@%o',':WAT@%HW'),(':JAN@%ho',':WAT@%OW')]
+        rdf_couples=[(':JAN@%o',':WAT@%HW','jan_ox_wat_hw'),(':JAN@%ho',':WAT@%OW','jan_ho_wat_ow')]
         for couples in rdf_couples:     
-            couple_name=str(couples[0])+str(couples[1])
-            data[couple_name]=rdf(couples[0],couples[1])
-            print('Done with couple:'+couple_name)
+            couple_name = couples[2]
+            data[couple_name] = rdf(couples[0],couples[1])
         return data 
 
 
