@@ -20,12 +20,12 @@ import multiprocessing
 start=time.time()
 
 
-#traj1=my_traj(0, 'ETN', 2, 5)
-#traj1.extract_dend_dend_distance()
-#traj2=my_traj(4, 'TFN', 2, 5)
-#traj2.extract_dend_dend_distance()
-traj3=my_traj(9, 'ETN', 2, 25)
-traj3.extract_dend_dend_distance()
+traj1=my_traj(0, 'ETN', 2, 5)
+traj1.extract_CCC_angle()
+traj2=my_traj(1, 'ETN', 1, 5)
+traj2.extract_CCC_angle()
+#traj3=my_traj(9, 'ETN', 2, 25)
+#traj3.extract_dihedral()
 end=time.time()
 output=open('out.txt','w')
 

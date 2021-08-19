@@ -15,12 +15,11 @@ def triazol_dihedral(traj, time_averaged=True, save_to_file=True, plot=True):
     """
     import numpy as np
 
+    mymask = traj.get_angle_mask(['O3','C13','C10','C9'])
+    dihedrals= pt.dihedral(traj, mask=mymask)
+    
     if traj.ndendr > 1:
-        #dihedral_atoms = ['@O3 ','@C13 ','@C10 ','@C9']
-        #mymask=[''.join([':' + str(resid) + atom_name for atom_name in dihedral_atoms]) for resid in range(1,traj.ndendr+1)]
-        mymask = traj.get_angle_mask(['O3','C13','C10','C9'])
-        dihedrals= pt.dihedral(traj, mask=mymask)
-        media_t=np.zeros((traj.n_frames-1, traj.ndendr))
+        media_t = np.zeros((traj.n_frames-1, traj.ndendr))
         for j in range(traj.ndendr):
             for i in range(traj.n_frames):
                 if dihedrals[j,i] < 0:
@@ -31,18 +30,18 @@ def triazol_dihedral(traj, time_averaged=True, save_to_file=True, plot=True):
                     pass
                 else:
                     media_t[i-1,j] = sum(dihedrals[j,0:i+1])/(i+1) 
-    else:
-        dihedrals= pt.dihedral(traj, ':1@O3 :1@C13 :1@C10 :1@C9') 
-        media_t=np.zeros((traj.n_frames-1, 1))
-        for i in range(traj.n_frames):
-            if dihedrals[i] < 0:
-                dihedrals[i] *= -1
-            if i==0:
-                media_t[i,0]=dihedrals[0]
-            if i==traj.n_frames:
-                pass
-            else:
-                media_t[i-1,0] = sum(dihedrals[0:i+1])/(i+1) 
+        return dihedrals, media_t
+    
+    media_t = np.zeros((traj.n_frames-1, 1))
+    for i in range(traj.n_frames):
+        if dihedrals[i] < 0:
+            dihedrals[i] *= -1
+        if i==0:
+            media_t[i,0]=dihedrals[0]
+        if i==traj.n_frames:
+            pass
+        else:
+            media_t[i-1,0] = sum(dihedrals[0:i+1])/(i+1) 
     
     return dihedrals, media_t
 
@@ -74,15 +73,18 @@ def CCC_angle(traj):
         #          '   '   '   '         #
         ##################################
     import numpy as np
-    mymask=[':'+str(resid)+'@C30'+' :'+str(resid)+'@C16'+' :' +str(resid)+'@C33' for resid in range(1,traj.ndendr+1)]
-    angles=pt.angle(traj,mymask)
-    media_t=np.zeros((traj.n_frames-1,traj.ndendr))
+    mymask = traj.get_angle_mask(['C30','C16','C33'])
+    #mymask = [':'+str(resid)+'@C30'+' :'+str(resid)+'@C16'+' :' +str(resid)+'@C33' for resid in range(1,traj.ndendr+1)]
+    angles = pt.angle(traj,mymask)
+
+    #if traj.ndendr > 1:
+    media_t = np.zeros((traj.n_frames-1,traj.ndendr))
     for j in range(traj.ndendr):
         for i in range(1,traj.n_frames):
             if traj.ndendr > 1:
-                media_t[i-1,j]=(sum(angles[j,0:i+1]))/(i+1) 
+                media_t[i-1,j]=sum(angles[j,0:i+1])/(i+1) 
             else:
-                media_t[i-1,j]=(sum(angles[0:i+1]))/(i+1) 
+                media_t[i-1,j]=sum(angles[0:i+1])/(i+1)
     return angles, media_t
 
 

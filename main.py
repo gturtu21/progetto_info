@@ -14,24 +14,36 @@ except ValueError:
     print('The path variable was already correct!!')
     pass
 
-################################# IMPORT THE TRAJECTORY ##################################
+
 
 class my_traj(pt.TrajectoryIterator):
-    """ cosolvent should be 'ETN' or 'TFN' or None """
+
+    """ This class instantiate trajectory object regarding fluorinated dendrons molecular dynamics simulations.
+    - trajectory_index: read 'mytrajectories.py' where all the trajectories are listed with indexes;
+    - cosolvent: should be 'ETN' or 'TFN' or None;
+    - number_of_dendrons: depends on the simulation box simulated;
+    - concentration: it's the concentration of ETN or TFN;
+    - first_step: number of step to start loading the simulation;
+    - last_step: number of step to stop loading the simulation. """
+
+    ############### IMPORT THE TRAJECTORY ##############
+
     from mytrajectories import get_trajectory_files
     all_trajectories = get_trajectory_files()
-    def __init__(self, trajectory_index, cosolvent, number_of_dendrons, concentration,timerange=[(0,-2)]):
+
+    def __init__(self, trajectory_index, cosolvent, number_of_dendrons, concentration, first_step, last_step):
         self.filepath, self.filetraj, self.filetop = self.all_trajectories[trajectory_index] 
         self.index = trajectory_index+1
         self.cosolvent = cosolvent
         self.ndendr = number_of_dendrons
         self.conc = str(concentration)+'%'
-        self.time = timerange
-        """ the following command it's used to instantiate a pt.TrajectoryIterator object:
-        https://amber-md.github.io/pytraj/latest/_api/pytraj.trajectory_iterator.html"""
-        super().__init__(self.filepath+self.filetraj,self.filepath+self.filetop)
+        self.timerange = [(first_step, last_step)] ## this syntax is required by the superclass definition
 
-    ################
+        """ the following command it's used to instantiate a pt.TrajectoryIterator object:
+        https://amber-md.github.io/pytraj/latest/_api/pytraj.trajectory_iterator.html """
+        super().__init__(self.filepath+self.filetraj, self.filepath+self.filetop, self.timerange)
+
+    ################ Getter Methods ################
 
     def get_OH_hydrogens_atomnames(self):
         """ return a list of the atom names of hydrogens in the -OH groups
@@ -50,8 +62,10 @@ class my_traj(pt.TrajectoryIterator):
         if len(atom_names) < 3 or len(atom_names) > 4:
             print('A list of 3 or 4 atom names should be given as an input')
             return
-        angle_mask = [' '.join([':' + str(resid) + '@' + atom_name for atom_name in atom_names]) for resid in range(1, self.ndendr+1)]
-        return angle_mask
+        if self.ndendr > 1:
+            angle_mask = [' '.join([':' + str(resid) + '@' + atom_name for atom_name in atom_names]) for resid in range(1, self.ndendr+1)]
+            return angle_mask
+        return ' '.join([':1' + '@' + atom_name for atom_name in atom_names])
 
 
     def __str__(self):

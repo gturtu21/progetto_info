@@ -1,0 +1,17 @@
+import-im6.q16: unable to grab mouse `': Resource temporarily unavailable @ error/xwindow.c/XSelectWindow/9186.
+import-im6.q16: unable to grab mouse `': Resource temporarily unavailable @ error/xwindow.c/XSelectWindow/9186.
+from: can't read /var/mail/main
+import-im6.q16: unable to grab mouse `': Resource temporarily unavailable @ error/xwindow.c/XSelectWindow/9186.
+import-im6.q16: unable to grab mouse `': Resource temporarily unavailable @ error/xwindow.c/XSelectWindow/9186.
+import-im6.q16: unable to grab mouse `': Resource temporarily unavailable @ error/xwindow.c/XSelectWindow/9186.
+./RUN.py: 18: ./RUN.py: os.environ[OPENBLAS_NUM_THREADS]: not found
+./RUN.py: 20: ./RUN.py: Syntax error: "(" unexpected
+XIO:  fatal IO error 11 (Resource temporarily unavailable) on X server "localhost:12.0"
+      after 27 requests (26 known processed) with 0 events remaining.
+import-im6.q16: unable to open X server `localhost:12.0' @ error/import.c/ImportImageCommand/358.
+from: can't read /var/mail/main
+import-im6.q16: unable to open X server `localhost:12.0' @ error/import.c/ImportImageCommand/358.
+import-im6.q16: unable to open X server `localhost:12.0' @ error/import.c/ImportImageCommand/358.
+import-im6.q16: unable to open X server `localhost:12.0' @ error/import.c/ImportImageCommand/358.
+./RUN.py: 18: ./RUN.py: os.environ[OPENBLAS_NUM_THREADS]: not found
+./RUN.py: 20: ./RUN.py: Syntax error: "(" unexpected
