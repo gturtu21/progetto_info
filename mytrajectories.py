@@ -1,5 +1,5 @@
 
-def get_trajectory_files():
+def trajectory_files():
     """ The function returns the list containing all the path to possible trajectories : 
     - 0: Two fdg3 in etoh 5%; 
     - 1: One fdg3 in etoh 5% ; 
@@ -24,4 +24,33 @@ def get_trajectory_files():
         (common+'FD3_IN_WATER_ETHANOL_25PC/','din.nc','fdg3_wtet25pc.prmtop'), \
         (common+'box_water_ethanol_25pc_100_close_dendrons/production/','wrapped_din.nc','dimer_wtet25pc.prmtop')]
     return mytrajectories_list
+
+
+def trajectory_description():
+    traj_descr = ['Two FDG3 molecules in ETN 5%', \
+                  'One FDG3 molecule in ETN 5%', \
+                  'One FDG3 molecule in pure WATER', \
+                  'Two FDG3 molecules in TFN 5% (0-100ns)', \
+                  'Two FDG3 molecules in TFN 5% (100-200ns)', \
+                  'Two FDG3 molecules in TFN 5% (0-200ns)', \
+                  'Two FDG3 molecules in ETN 5% (0-200ns)', \
+                  'One FDG3 molecule in TFN 5%', \
+                  'One FDG3 molecule in ETN 25%', \
+                  'Two FDG3 molecules in ETN 25%']
+    return traj_descr
+
+def my_traj_class_usage():
+    traj_usage = ["instantiate as my_traj(0, 'ETN', 2, 5, 0, 1000)",\
+                  "instantiate as my_traj(1, 'ETN', 1, 5, 0, 1000)",\
+                  "instantiate as my_traj(2,  None, 1, 0, 0, 1000)",\
+                  "instantiate as my_traj(3, 'TFN', 2, 5, 0, 1000)",\
+                  "instantiate as my_traj(4, 'TFN', 2, 5, 0, 1000)",\
+                  "instantiate as my_traj(5, 'TFN', 2, 5, 0, 2000)",\
+                  "instantiate as my_traj(6, 'ETN', 2, 5, 0, 2000)",\
+                  "instantiate as my_traj(7, 'TFN', 1, 5, 0, 1000)",\
+                  "instantiate as my_traj(8, 'ETN', 1, 25, 0, 1000)",\
+                  "instantiate as my_traj(9, 'ETN', 2, 25, 0, 1000)"]
+    return traj_usage                                         
+                                                              
+
 

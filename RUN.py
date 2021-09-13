@@ -19,11 +19,11 @@ import multiprocessing
 
 start=time.time()
 
-mynewtraj=my_traj(5,'TFN', 2, 5, 0, 500)
-mynewtraj.extract_dihedral()
-#mynewtraj.extract_ff_distances()
-#mynewtraj.all_analysis()
-
+mynewtraj=my_traj(5,'TFN', 2, 5, 0, 100)
+#mynewtraj.extract_dihedral()
+mynewtraj.extract_ff_distances()
+mynewtraj.extract_c_ho_distances()
+mynewtraj.extract_dend_dend_distance()
 
 end=time.time()
 output=open('out.txt','w')

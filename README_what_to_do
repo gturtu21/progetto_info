@@ -1,0 +1,3 @@
+riscrivi get_OH_atomname, get_F_atomnames, get_C_atomnames come chiamata di get_atom_dict
+
+riscrivi get_angle_mask using DihMask
